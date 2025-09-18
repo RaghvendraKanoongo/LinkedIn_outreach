@@ -71,17 +71,13 @@ def scrape_linkedin_posts(linkedin_url, retries=2):
         print(POSTS_ACTOR_ID)
         run = apify_client.actor(POSTS_ACTOR_ID).call(run_input=run_input)
 
-       
         
         if not run or 'defaultDatasetId' not in run:
             raise Exception("Apify posts actor failed to return valid run data")
         
-        print("========================Hello this is where I am working with ============================")
-        print("========================Hello this is where I am working with ============================")
-        print("========================Hello this is where I am working with ============================")
+        print("======================== Started Scraping Linkedin Posts  ============================")
         # Get the results
         items = list(apify_client.dataset(run["defaultDatasetId"]).iterate_items())
-        print(items)
         if not items:
             logger.warning(f"No posts found for LinkedIn URL: {linkedin_url}")
             return []
@@ -115,11 +111,9 @@ def scrape_linkedin_profile(linkedin_url, retries=2):
         if not profile_run or 'defaultDatasetId' not in profile_run:
             raise Exception("Apify profile actor failed to return valid run data")
         
+        print("======================== Started Scraping Linkedin Profile  ============================")
         # Get the results
         profile_items = list(apify_client.dataset(profile_run["defaultDatasetId"]).iterate_items())
-        print("++++++++++++++++++++++++++++++++hello++++++++++++++")
-        print(profile_items)
-        print("++++++++++++++++++++++++++++++++hello++++++++++++++")
         if not profile_items:
             raise Exception("No profile data found")
             
@@ -315,10 +309,14 @@ def generate_outreach_message(profile_text, posts_text):
     """Generates a personalized, human-sounding outreach message using Gemini LLM."""
     try:
         
-        prompt = """
+        prompt ="""""
             You are a professional B2B marketer writing LinkedIn connection request messages on behalf of Consultadd, a Custom AI Solutions provider for SMBs. Your goal is to craft authentic, relationship-first connection requests for C-level executives, founders, and decision-makers. These messages must sound natural, personal, and human — not AI-generated or salesy.
-            Writing Guidelines Tone & Style Warm, conversational, a little professional and more friendly. Avoid salesy language, jargon, or generic “template” feel.
-            Messages should feel like they were written after genuinely reviewing the prospect’s profile or posts.
+            Writing Guidelines
+            Tone & Style
+            Warm, conversational, professional, and friendly.
+            Slight informality is fine (1 message should be fully informal).
+            Avoid jargon, buzzwords, or salesy phrasing.
+            Should feel like a real human message written after reviewing their profile/posts.
             Personalization Basis
             Use available inputs:
             Career milestones, promotions, education, or skills.
@@ -326,28 +324,29 @@ def generate_outreach_message(profile_text, posts_text):
             Industry expertise, domain authority, or thought leadership.
             LinkedIn posts or shared content (if available).
             Shared connections, events, or webinars.
-            If no posts are available, rely entirely on profile data (role, experience, company, expertise).
-            Choose one personalization angle per message.
+            If no posts are available, use profile data only (role, company, expertise).
+            Each message must use one personalization angle.
             Message Structure
-            Keep it around ~20-25 words (short, clear, easy to read).
-            No brand mention in the first message unless the profile signals high relevance to AI solutions.
-            Focus on rapport-building, curiosity, and genuine interest.
-            End with a soft invitation to connect and start with a good friendly salutation (not a CTA to buy).
+            Start with a salutation (Hi, Hello, Hey, etc.).
+            Keep it short — under 18 words.
+            End with a soft invitation to connect (not a sales pitch).
+            No brand mention in the first message unless prospect signals high AI interest.
+            At least one message should feel fully informal.
             Output Format
             Generate exactly 5 different messages.
             Each message must use a different personalization angle.
             Separate each message with this delimiter:
             ---MESSAGE_SEPARATOR---
             Example Output Format
-            Message 1 text here
-            ---MESSAGE_SEPARATOR---
-            Message 2 text here
-            ---MESSAGE_SEPARATOR---
-            Message 3 text here
-            ---MESSAGE_SEPARATOR---
-            Message 4 text here
-            ---MESSAGE_SEPARATOR---
-            Message 5 text here
+            Hi [First Name], congrats on your promotion—would love to connect!  
+            ---MESSAGE_SEPARATOR---  
+            Hello [First Name], loved your recent post on [topic]. Let's connect!  
+            ---MESSAGE_SEPARATOR---  
+            Hey [First Name], impressive journey in [industry]. Would be great to connect.  
+            ---MESSAGE_SEPARATOR---  
+            Hi [First Name], noticed [company achievement]. Exciting times! Happy to connect.  
+            ---MESSAGE_SEPARATOR---  
+            Hey [First Name], big fan of your work—let's connect and share ideas!  
             Input Data
             Use the following to personalize:
             PROFILE DATA:
