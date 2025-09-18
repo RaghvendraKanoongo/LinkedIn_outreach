@@ -13,6 +13,7 @@ import logging
 from urllib.parse import urlparse
 import time
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -316,46 +317,43 @@ def generate_outreach_message(profile_text, posts_text):
         
         prompt = """
             You are a professional B2B marketer writing LinkedIn connection request messages on behalf of Consultadd, a Custom AI Solutions provider for SMBs. Your goal is to craft authentic, relationship-first connection requests for C-level executives, founders, and decision-makers. These messages must sound natural, personal, and human — not AI-generated or salesy.
-Writing Guidelines
-Tone & Style
-Warm, conversational, professional.
-Avoid salesy language, jargon, or generic “template” feel.
-Messages should feel like they were written after genuinely reviewing the prospect’s profile or posts.
-Personalization Basis
-Use available inputs:
-Career milestones, promotions, education, or skills.
-Company growth, product launches, or announcements.
-Industry expertise, domain authority, or thought leadership.
-LinkedIn posts or shared content (if available).
-Shared connections, events, or webinars.
-If no posts are available, rely entirely on profile data (role, experience, company, expertise).
-Choose one personalization angle per message.
-Message Structure
-Keep under 300 characters (short, clear, easy to read).
-No brand mention in the first message unless the profile signals high relevance to AI solutions.
-Focus on rapport-building, curiosity, and genuine interest.
-End with a soft invitation to connect (not a CTA to buy).
-Output Format
-Generate exactly 5 different messages.
-Each message must use a different personalization angle.
-Separate each message with this delimiter:
- ---MESSAGE_SEPARATOR---
-Example Output Format
-Message 1 text here
----MESSAGE_SEPARATOR---
-Message 2 text here
----MESSAGE_SEPARATOR---
-Message 3 text here
----MESSAGE_SEPARATOR---
-Message 4 text here
----MESSAGE_SEPARATOR---
-Message 5 text here
-Input Data
-Use the following to personalize:
-PROFILE DATA:
- {profile_data}
-RECENT POSTS:
- {post_data}
+            Writing Guidelines Tone & Style Warm, conversational, a little professional and more friendly. Avoid salesy language, jargon, or generic “template” feel.
+            Messages should feel like they were written after genuinely reviewing the prospect’s profile or posts.
+            Personalization Basis
+            Use available inputs:
+            Career milestones, promotions, education, or skills.
+            Company growth, product launches, or announcements.
+            Industry expertise, domain authority, or thought leadership.
+            LinkedIn posts or shared content (if available).
+            Shared connections, events, or webinars.
+            If no posts are available, rely entirely on profile data (role, experience, company, expertise).
+            Choose one personalization angle per message.
+            Message Structure
+            Keep it around ~20-25 words (short, clear, easy to read).
+            No brand mention in the first message unless the profile signals high relevance to AI solutions.
+            Focus on rapport-building, curiosity, and genuine interest.
+            End with a soft invitation to connect and start with a good friendly salutation (not a CTA to buy).
+            Output Format
+            Generate exactly 5 different messages.
+            Each message must use a different personalization angle.
+            Separate each message with this delimiter:
+            ---MESSAGE_SEPARATOR---
+            Example Output Format
+            Message 1 text here
+            ---MESSAGE_SEPARATOR---
+            Message 2 text here
+            ---MESSAGE_SEPARATOR---
+            Message 3 text here
+            ---MESSAGE_SEPARATOR---
+            Message 4 text here
+            ---MESSAGE_SEPARATOR---
+            Message 5 text here
+            Input Data
+            Use the following to personalize:
+            PROFILE DATA:
+            {profile_data}
+            RECENT POSTS:
+            {post_data}
 """.format(profile_data=profile_text, post_data=posts_text)
         
         # Updated prompt to return structured messages with clear separators
