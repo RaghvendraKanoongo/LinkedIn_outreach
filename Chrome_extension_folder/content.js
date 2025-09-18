@@ -84,7 +84,6 @@
             setTimeout(addExtensionIndicator, 1000); // Wait for page to settle
         }
     }).observe(document, { subtree: true, childList: true });
-    
     initialize();
     
 })();

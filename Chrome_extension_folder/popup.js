@@ -1,5 +1,5 @@
 // Configuration
-const API_BASE_URL = 'http://127.0.0.1:5020';
+const API_BASE_URL = 'https://linkedin-outreach.onrender.com/';
 
 // DOM Elements
 const loadingState = document.getElementById('loading-state');
